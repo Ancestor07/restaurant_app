@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/common.dart/styles.dart';
 import 'package:restaurant_app/widget/platform_widget.dart';
 import 'package:restaurant_app/ui/detail_page.dart';
 import 'package:restaurant_app/model/restaurantresponse.dart';
@@ -39,12 +40,21 @@ class _HomePageState extends State<HomePage> {
     return PlatformWidget(androidBuilder: _buildAndroid, iosBuilder: _buildIOS);
   }
 
+  void _onBottomNavTapped(int index) {
+    setState(() {
+      _bottomNavIndex = index;
+    });
+  }
+
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Restaurant App'),
+      body: _listWidget[_bottomNavIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: secondaryColor,
+        currentIndex: _bottomNavIndex,
+        items: _bottomNavBarItem,
+        onTap: _onBottomNavTapped,
       ),
-      body: _buildList(context),
     );
   }
 
